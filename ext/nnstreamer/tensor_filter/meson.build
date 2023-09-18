@@ -777,3 +777,23 @@ if mxnet_support_is_available
     include_directories: include_directories('.')
   )
 endif
+
+if ncnn_support_is_available
+  nnstreamer_filter_ncnn_deps = ncnn_support_deps + [glib_dep, gst_dep, nnstreamer_dep]
+
+  filter_sub_ncnn_sources = ['tensor_filter_ncnn.cc']
+
+  shared_library('nnstreamer_filter_ncnn',
+    filter_sub_ncnn_sources,
+    dependencies: nnstreamer_filter_ncnn_deps,
+    install: true,
+    install_dir: filter_subplugin_install_dir
+  )
+
+  static_library('nnstreamer_filter_ncnn',
+    filter_sub_ncnn_sources,
+    dependencies: nnstreamer_filter_ncnn_deps,
+    install: true,
+    install_dir: nnstreamer_libdir
+  )
+endif
